@@ -18,11 +18,10 @@ The CSV file must have
 
 Additionally, the value of the column `category`, if present, will be used to select map pins from the map pins folder, if a suitable pin is present. Thus is the value of `category` is `foo`, a map pin image with the name `Foo-pin.png` will be selected.
 
-Note that, unlike in geocsv, *THERE IS NO DEFAULT PIN*, as we cannot query the server for pin names. So a default pin will be shown only if either
+Note that, unlike in **geocsv**, *THERE IS NO DEFAULT PIN*, as there is no server side intelligence so we cannot query the server for pin names. So a default pin will be shown only if either
 
 1. There is no `category` column, or
 2. If the `category` column is empty
-
 
 ## Setup
 
@@ -52,6 +51,6 @@ get live reloading, nor a REPL.
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2020 Simon Brooke
 
-Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+Licensed under the GNU General Public License, version 2.0 or (at your option) any later version.
