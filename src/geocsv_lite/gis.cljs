@@ -116,8 +116,8 @@
   "Add an appropriate map-pin for this `record` in this map `view`, if it
   has a valid `:latitude` and `:longitude`."
   [record index view]
-  (let [lat (:latitude record)
-        lng (:longitude record)]
+  (let [lat (js/Number (:latitude record))
+        lng (js/Number (:longitude record))]
     (if
       (and
         (number? lat)
@@ -170,10 +170,10 @@
   centre of the locations of these records as indicated by the values of their
   `:latitude` and `:longitude` keys."
   [records]
-  (let [lats (filter number? (map :latitude records))
+  (let [lats (map js/Number (map :latitude records))
         min-lat (apply min lats)
         max-lat (apply max lats)
-        lngs (filter number? (map :longitude records))
+        lngs (filter js/Number (map :longitude records))
         min-lng (apply min lngs)
         max-lng (apply max lngs)]
     (if-not
@@ -185,11 +185,12 @@
 
 (defn refresh-map-pins
   "Refresh the map pins on the current map. Side-effecty; liable to be
-    problematic."
+  problematic."
   [view records]
-  (js/console.log "refresh-map-pins called")
   (let [view (map-remove-pins view)
         centre (compute-centre records)]
+    (js/console.log (str "refresh-map-pins called; " (count records) " records, centre at " centre))
+    (js/console.log (str "Type of longitude " (:longitude (first records)) " is: " (type (:longitude (first records)))))
     (if
       view
       (let [added (remove nil? (map #(add-map-pin %1 %2 view) records (range)))]

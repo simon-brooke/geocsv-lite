@@ -6,14 +6,16 @@
       [geocsv-lite.gis :as gis]
       [geocsv-lite.map :as m]))
 
-(enable-console-print!)
 
-(println "This text is printed from src/geocsv-lite/core.cljs. Go ahead and edit it and see reloading in action.")
-
-
-
-
-;; define your app data so that it doesn't get over-written on reload
+(defn ^:export initialise-map-element
+  "Create a map view in the element with this `id` and decorate it with
+  pins showing locations from this `data-source`."
+  [id data-source]
+  (js/console.log (str "geocsv-lite.core.initialise-map-element called with args id: " id "; data-source: " data-source "."))
+  (let [sid (str id)
+        kid (keyword sid)
+        v (m/add-view sid 55 -4 10)]
+    (.whenReady v (fn [] (get-data kid data-source)))))
 
 (defonce app-state (atom {:text "Hello world!"}))
 
@@ -21,11 +23,4 @@
   ;; optionally touch your app-state to force rerendering depending on
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
-  (m/add-view "map" 55 -4 10)
-  (let [query (get-query-part-as-map)
-        uri (get-csv-url query)
-        records (get-data :map)]
-    (dom/set-text (.getElementById js/document "message")
-                  (str "Query was: " query "; uri was: " uri))))
-
-
+)

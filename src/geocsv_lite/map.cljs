@@ -72,16 +72,20 @@
 
 (defn add-view
   [id lat lng zoom]
-  (let [k (keyword id)]
-    (when-not
-      (@views k)
-      (swap! views assoc k (map-did-mount id lat lng zoom)))
-    (views k)))
+  (let [k (keyword id)
+        v (or
+            (@views k)
+            (map-did-mount id lat lng zoom))]
+    (js/console.log (str "Added Leaflet view to element with id `" id "`"))
+    (swap! views assoc k v)
+    v))
 
 
 (defn get-view
   [k]
-  (@views k))
+  (when-not (keyword? k) (js/console.log "Key `" k "` passed to get-view is not a keyword"))
+  (when-not (k @views) (js/console.log "Key `" k "` does not identify a known view"))
+  (k @views))
 
 
 
