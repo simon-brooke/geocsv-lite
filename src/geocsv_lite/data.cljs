@@ -37,6 +37,29 @@
       (:uri query) (:uri query))))
 
 
+(defn prepare-records
+  "`data` is expected to be a vector of vectors, where the first vector
+  contains column headers and the remaining vectors contain records.
+  Return this as a vector of maps, with each map having keys taken from
+  the first vector and values taken from one of the subsequent vectors."
+  [data]
+  (let [cols (map
+               #(let [n (when-not
+                          (empty? %)
+                          (when (string? %)
+                            (cs/lower-case
+                              (cs/replace
+                                % #"[^\w\d]+" "-"))))]
+                  (keyword
+                    (if (empty? n)
+                      (gensym)
+                      n)))
+               (first data))]
+    (map
+      (fn [r] (zipmap cols r))
+      (rest data))))
+
+
 (defn default-handler
   "When data is received from a URL, it is received asynchronously. This
   is the default callback called with the `response` of the HTTP request,
@@ -46,46 +69,78 @@
   (if
     (= (:status response) 200)
     (let [content (:body response)
-          data (map
-                 #(merge %
-                         {:longitude (js/Number (:longitude %))
-                          :latitide (js/Number (:latitude %))})
-                 (js->clj (.-data (.parse js/Papa content (clj->js {:dynamicTyping true})))))
-          cols (map
-                 #(let [n (when-not
-                            (empty? %)
-                            (when (string? %)
-                              (cs/lower-case
-                                (cs/replace
-                                  % #"[^\w\d]+" "-"))))]
-                    (keyword
-                      (if (empty? n)
-                        (gensym)
-                        n)))
-                 (first data))
-          records (map
-                    (fn [r] (zipmap cols (map str r)))
-                    (rest data))
-          ]
+          records (prepare-records
+                    (:data
+                      (js->clj
+                        (.parse js/Papa content
+                                (clj->js {:dynamicTyping true}))
+                        :keywordize-keys true)))]
       (gis/refresh-map-pins (get-view k) records))
     (n/error (str "Bad response from server: " (:status response)))))
 
 
+(defn get-data-from-uri
+  "Get data for the view identified by this keyword `k` from this `uri`."
+  [k uri]
+  (go (let [response (<! (http/get uri {:with-credentials? "false"}))]
+        (default-handler response k))))
+
+
 (defn get-data
   "Get data for the view identified by this keyword `k` from this `data-source`.
-  In this initial release the data source must be a URL, but in future releases
-  I intend that it may also be a list of maps representing records, or a CSV or
-  JSON formatted string."
+  The data source may be a URL, or a CSV or JSON formatted string."
   [k data-source]
-  (let
-    [uri data-source]
-    (go (let [response (<! (http/get uri {:with-credentials? "false"
-                                          :access-control-allow-credentials "true"
-                                          :origin js/window.location.hostname}))]
-            (default-handler response k)))))
+  (let [p (js->clj (.parse js/Papa data-source)  :keywordize-keys true)
+        data (if
+               (empty? (:errors p))
+               (:data p)
+               ;; otherwise, is it JSON?
+               (try
+                 (js->clj (.parse js/JSON data-source))
+                 (catch :default _ nil)))]
+    ;; almost anything can be a valid URL, so it's hard to verify that a given
+    ;; string is not one. So we will assume that what we've been passed is a
+    ;; URL unless we've been able to parse valid data out of it.
+    (js/console.debug "Found records: " (clj->js data))
+    (if
+      ;; it looks like valid data if it's a vector of vectors.
+      (and (vector? data) (every? vector? data))
+      (let [records (prepare-records data)]
+        (n/message (str "Found " (count records) " records of inline data for map `" k "`"))
+        (gis/refresh-map-pins (get-view k) (prepare-records data)))
+      ; else
+      (get-data-from-uri k data-source))))
+
 
 (defn get-data-with-uri-and-handler
   [uri handler-fn k]
   (go (let [response (<! (http/get uri))]
           (apply handler-fn (list response k)))))
 
+;; (def data-source  "Name, Latitude, Longitude
+;;   Nether Hazelfield Cottage, 54.816274, -3.887435
+;;   Over Hazelfield Cottage, 54.823192, -3.899516
+;;   Winter Palace, 54.822260, -3.920147
+;;   Craignair, 54.842321, -3.872055
+;;   Carlinscraig, 54.843224,-3.8730822
+;;   Orchardton, 54.859129, -3.854212
+;;   Elderslie, 54.845596, -3.866432")
+
+;; (prepare-records
+;;   (:data (js->clj (.parse js/Papa data-source)
+;;                   :keywordize-keys true)))
+
+;; (get-data :inline-csv-map "http://localhost:3449/data/data.csv")
+;; (get-data :inline-csv-map data-source)
+;; (every? (fn [r] (and (vector? r) (every? vector? r))) (:data (js->clj (.parse js/Papa data-source)
+;;                   :keywordize-keys true)))
+;; (every? vector? (:data (js->clj (.parse js/Papa data-source)
+;;                   :keywordize-keys true)))
+;; (vector? (first (:data (js->clj (.parse js/Papa data-source)
+;;                   :keywordize-keys true))))
+;; (def p (:data (js->clj (.parse js/Papa data-source)
+;;                   :keywordize-keys true)))
+;; (every? vector? p)
+
+;; (vector? p)
+;; (every? vector? p)

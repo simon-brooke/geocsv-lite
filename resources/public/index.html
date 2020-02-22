@@ -21,6 +21,15 @@ crossorigin=""/ -->
     <p id="message"></p>
     <p id="error"></p>
     <div id="app">
+      <p>
+      </p>
+      <h2>
+        Map using inline CSV
+      </h2>
+      <div id="inline-csv-map" style="height: 600px; width: 80%; border: thin solid gray;"></div>
+      <h2>
+        Map using CSV from URL
+      </h2>
       <div id="map" style="height: 600px; width: 80%; border: thin solid gray;"></div>
       <div id="doc">
         <p>
@@ -71,7 +80,31 @@ crossorigin=""></script -->
   <script src="vendor/node_modules/papaparse/papaparse.min.js"></script>
   <script src="js/compiled/geocsv_lite.js" type="text/javascript"></script>
   <script>
-    geocsv_lite.core.initialise_map_element("map", "/data/data.csv");
+    geocsv_lite.core.initialise_map_element("inline-csv-map", "Name,Latitude,Longitude\n"+
+                                            "Nether Hazelfield Cottage,54.816274,-3.887435,\n"+
+                                            "Over Hazelfield Cottage,54.823192,-3.899516,\n"+
+                                            "Winter Palace,54.822260,-3.920147,\n"+
+                                            "Craignair,54.842321,-3.872055,\n"+
+                                            "Carlinscraig,54.843224,-3.8730822,\n"+
+                                            "Orchardton,54.859129,-3.854212,\n"+
+                                            "Elderslie,54.845596,-3.866432\n" +
+                                            "Braendam Lodge,56.191257, -4.173869\n" +
+                                            "Moncrief Terrace,55.938946, -3.183590\n" +
+                                            "Craiglockhart Road, 55.916329, -3.243627\n" +
+                                            "Merchiston Gardens,55.929761, -3.220899\n" +
+                                            "Stamfordham, 55.042020, -1.877289\n" +
+                                            "Kaymanton, 54.965216, -2.102066\n" +
+                                            "Lonsdale College, 54.011382, -2.786183\n" +
+                                            "Glasson Dock, 53.997440, -2.845856\n" +
+                                            "Dolphinholme, 53.978104, -2.735363\n" +
+                                            "Greenfield Street, 54.048707, -2.792666\n" +
+                                            "Prospect Street,54.044364, -2.792685\n" +
+                                            "Westminster Palace Gardens, 51.497045, -0.135231\n" +
+                                            "Girdstingwood Cottage, 54.804639, -3.951338\n" +
+                                            "Millburn Street, 54.837358, -4.046627\n" +
+                                            "Palmer's Close, 54.834972, -4.053855"
+                                           );
+    geocsv_lite.core.initialise_map_element("map", "http://localhost:3449/data/data.csv");
   </script>
   </body>
 </html>
