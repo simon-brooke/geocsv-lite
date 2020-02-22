@@ -1,5 +1,5 @@
 (ns geocsv-lite.map
-    (:require ))
+    (:require [geocsv-lite.notify :as n]))
 
 ;;; Cribbed heavily from
 ;;;   https://github.com/reagent-project/reagent-cookbook/tree/master/recipes/leaflet
@@ -76,15 +76,15 @@
         v (or
             (@views k)
             (map-did-mount id lat lng zoom))]
-    (js/console.log (str "Added Leaflet view to element with id `" id "`"))
+    (n/message (str "Added Leaflet view to element with id `" id "`"))
     (swap! views assoc k v)
     v))
 
 
 (defn get-view
   [k]
-  (when-not (keyword? k) (js/console.log "Key `" k "` passed to get-view is not a keyword"))
-  (when-not (k @views) (js/console.log "Key `" k "` does not identify a known view"))
+  (when-not (keyword? k) (n/message (str "Key `" k "` passed to get-view is not a keyword")))
+  (when-not (k @views) (n/message (str "Key `" k "` does not identify a known view")))
   (k @views))
 
 

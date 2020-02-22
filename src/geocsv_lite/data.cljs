@@ -6,8 +6,7 @@
             [cljs.core.async :refer [<!]]
             [geocsv-lite.gis :as gis]
             [geocsv-lite.map :refer [get-view]]
-            ))
-
+            [geocsv-lite.notify :as n]))
 
 
 
@@ -69,7 +68,7 @@
                     (rest data))
           ]
       (gis/refresh-map-pins (get-view k) records))
-    (js/console.error (str "Bad response from server: " (:status response)))))
+    (n/error (str "Bad response from server: " (:status response)))))
 
 
 (defn get-data
@@ -90,8 +89,3 @@
   (go (let [response (<! (http/get uri))]
           (apply handler-fn (list response k)))))
 
-
-;; (go (let [uri "http://localhost:3449/data/data.csv"
-;;           response (<! (http/get uri))]
-;;       (when (= (:status response) 200)
-;;         (default-handler response :map))))

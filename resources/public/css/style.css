@@ -35,7 +35,7 @@ footer a {
 h1, h2, h3, h4, h5, h6 {
   width: 100%;
   margin: 0;
-  padding-left: 10%;
+  padding: 0.5em 10%;
   text-align: left;
   background-color: #3298dc;
   color: white;
@@ -43,4 +43,20 @@ h1, h2, h3, h4, h5, h6 {
 
 samp {
   background-color: #b0b0ff;
+}
+
+#error
+{
+  background-color: maroon;
+  color: white;
+  margin: 0px;
+  padding-left: 10%;
+}
+
+#message
+{
+  background-color: darkgreen;
+  color: white;
+  margin: 0px;
+  padding-left: 10%;
 }

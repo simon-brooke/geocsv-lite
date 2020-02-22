@@ -2,7 +2,8 @@
       :author "Simon Brooke"}
   geocsv-lite.gis
   (:require [cljs.reader :refer [read-string]]
-            [clojure.string :as cs]))
+            [clojure.string :as cs]
+            [geocsv-lite.notify :as n]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;
@@ -39,28 +40,28 @@
         (fn [position]
           (let [lat (.-latitude (.-coords position))
                 lng (.-longitude (.-coords position))]
-            (js/console.log (str "Current location is: " lat ", " lng))
+            (n/message (str "Current location is: " lat ", " lng))
             (if
               (and view (float? lat) (float? lng))
               (do
                 (.panTo view (.latLng js/L lat lng)))
               (do
-                (js/console.log
+                (n/message
                   (if view
                     (str "Geolocation failed lat: '" lat "'; lng '" lng "'")
                     "No value for subscription to [:view]"))
                 0)))))
       (do
-        (js/console.log "Geolocation not available")
+        (n/message "Geolocation not available")
         0))
     (catch js/Object any
-      (js/console.log "Exception while trying to access location: " + any)
+      (n/error (str "Exception while trying to access location: " any))
       0)))
 
 
 (defn map-pin-click-handler
   [id]
-  (js/console.log (str "Click handler for record #" id)))
+  (n/message (str "Click handler for record #" id)))
 
 
 (defn pin-image
@@ -139,7 +140,7 @@
                                       :title (:name record)}))]
         (.bindPopup marker (popup-table-content record))
         (.addTo marker view)
-        (js/console.log (str "Added `"(:name record)"` in at " lat ", " lng))
+        (n/message (str "Added `"(:name record)"` in at " lat ", " lng))
         marker))))
 
 (defn map-remove-pins
@@ -170,10 +171,12 @@
   centre of the locations of these records as indicated by the values of their
   `:latitude` and `:longitude` keys."
   [records]
-  (let [lats (map js/Number (map :latitude records))
+  (let [lats (remove zero?
+                     (filter number? (map js/Number (map :latitude records))))
         min-lat (apply min lats)
         max-lat (apply max lats)
-        lngs (filter js/Number (map :longitude records))
+        lngs (remove zero?
+                     (filter number? (map js/Number (map :longitude records))))
         min-lng (apply min lngs)
         max-lng (apply max lngs)]
     (if-not
@@ -189,15 +192,16 @@
   [view records]
   (let [view (map-remove-pins view)
         centre (compute-centre records)]
-    (js/console.log (str "refresh-map-pins called; " (count records) " records, centre at " centre))
-    (js/console.log (str "Type of longitude " (:longitude (first records)) " is: " (type (:longitude (first records)))))
     (if
       view
-      (let [added (remove nil? (map #(add-map-pin %1 %2 view) records (range)))]
-        (js/console.log (str "Adding " (count added) " pins"))
+      (do
+        (n/message
+          (str
+            "Mapped "
+            (count
+              (remove nil? (map #(add-map-pin %1 %2 view) records (range))))
+            " records, centre at " centre))
         (if
           (:latitude centre)
-          (do
-            (js/console.log (str "computed centre: " centre))
-            (.setView view (clj->js [(:latitude centre) (:longitude centre)]) (:zoom centre)))))
-      (do (js/console.log "View is not yet ready")))))
+          (.setView view (clj->js [(:latitude centre) (:longitude centre)]) (:zoom centre))))
+      (do (n/error "View is not yet ready")))))
