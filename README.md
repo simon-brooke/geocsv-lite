@@ -1,6 +1,6 @@
 # geocsv-lite
 
-A wee tool to show comma-separated value data on a map.
+An ultra-lightweight tool to show comma-separated value data on a map.
 
 ## Overview
 
