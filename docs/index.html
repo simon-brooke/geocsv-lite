@@ -256,7 +256,7 @@ crossorigin=""/ -->
                                             "Zimbabwe,Harare,-17.816666666666666,31.033333,ZW,Africa\n" +
                                             "British Indian Ocean Territory,Diego Garcia,-7.3,72.400000,IO,Africa\n" );
     /* Map using CSV from URL */
-    var url = window.location.href.substring(0, window.location.href.length - "index.html".length) + "data/europe-capitals.csv";
+    var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/data/europe-capitals.csv";
     geocsv_lite.core.initialise_map_element("url-map", url);
   </script>
   </body>
