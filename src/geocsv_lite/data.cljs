@@ -49,7 +49,8 @@
                           (when (string? %)
                             (cs/lower-case
                               (cs/replace
-                                % #"[^\w\d]+" "-"))))]
+                                (cs/trim %)
+                                #"[^\w\d]+" "-"))))]
                   (keyword
                     (if (empty? n)
                       (gensym)
@@ -90,6 +91,7 @@
   "Get data for the view identified by this keyword `k` from this `data-source`.
   The data source may be a URL, or a CSV or JSON formatted string."
   [k data-source]
+  (js/console.debug (str "get-data: k = `" k "`; data-source = `" data-source "`"))
   (let [p (js->clj (.parse js/Papa data-source)  :keywordize-keys true)
         data (if
                (empty? (:errors p))

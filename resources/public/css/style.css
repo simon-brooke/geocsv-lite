@@ -64,6 +64,12 @@ samp {
   padding-left: 10%;
 }
 
+.geocsv {
+  height: 600px;
+  width: 80%;
+  border: thin solid gray;
+}
+
 .leaflet-popup-content h5 {
   width: 80%;
 }
