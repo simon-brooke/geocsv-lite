@@ -13,4 +13,4 @@ console.error(err);
 return clojure.browser.dom.set_text.call(null,document.getElementById("error"),err);
 });
 
-//# sourceMappingURL=notify.js.map?rel=1582560148430
+//# sourceMappingURL=notify.js.map?rel=1582621016323

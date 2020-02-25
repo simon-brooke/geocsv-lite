@@ -6,6 +6,14 @@ An ultra-lightweight tool to show comma-separated value data on a map.
 
 There's a [working demo site](https://simon-brooke.github.io/geocsv-lite/), from which you can crib how to integrate this into your own website.
 
+## Other variants
+
+This is a little project I've played about with, and there are now three variants:
+
+1. [geocsv](https://github.com/simon-brooke/geocsv) is a fairly heavyweight web-app with both client-side and serverside components. It was the first version, and is the only version which meets the original requirement of being able to present data from [Google Sheets](https://www.google.co.uk/sheets/about/), but it's a remarkably heavyweight solution to what should be a simple problem.
+2. [geocsv-lite](https://github.com/simon-brooke/geocsv-lite) is a much lighter, client-side only reworking of the problem, in ClojureScript. I still wasn't satisfied that this was light enough.
+3. [geocsv-js](https://github.com/simon-brooke/geocsv-js) is a reworking in native JavaScript without any frameworks or heave libraries, except Leaflet. It is vastly lighter, and probably the one to use in most applications.
+
 ## Overview
 
 This is an attempt to do a lightweight client-side only version of [geocsv](https://github.com/simon-brooke/geocsv), q.v. It doesn't fully work because it cannot pull data from remote sites because of cross-site scripting rules, and I haven't found a workaround for that.

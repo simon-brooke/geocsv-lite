@@ -171,7 +171,8 @@
   centre of the locations of these records as indicated by the values of their
   `:latitude` and `:longitude` keys."
   [records]
-  (let [lats (remove zero?
+  (try
+    (let [lats (remove zero?
                      (filter number? (map js/Number (map :latitude records))))
         min-lat (apply min lats)
         max-lat (apply max lats)
@@ -184,6 +185,10 @@
       {:latitude (+ min-lat (/ (- max-lat min-lat) 2))
        :longitude (+ min-lng (/ (- max-lng min-lng) 2))
        :zoom (compute-zoom min-lat max-lat min-lng max-lng)}
+      {}))
+    (catch :default
+      error
+      (n/error (str "Failed to compute centre because " error))
       {})))
 
 (defn refresh-map-pins

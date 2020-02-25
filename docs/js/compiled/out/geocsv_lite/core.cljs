@@ -12,10 +12,6 @@
   pins showing locations from this `data-source`. If `data-source` is nil
   or an empty string, the content of the element will be used, if present."
   [id data-source]
-  (n/message
-    (str
-      "geocsv-lite.core.initialise-map-element called with args id: "
-      id "; data-source: " data-source "."))
   (let [sid (str id)
         kid (keyword sid)
         v (m/add-view sid 55 -4 10)]

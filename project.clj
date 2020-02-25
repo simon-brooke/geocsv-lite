@@ -51,7 +51,10 @@
                 :compiler {:output-to "resources/public/js/compiled/geocsv_lite.js"
                            :main geocsv-lite.core
                            :optimizations :advanced
-                           :pretty-print false}}]}
+                           :externs ["L" "Papa"]
+                           :infer-externs true
+                           :pretty-print false
+                           :warnings true}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
              ;; :server-port 3449 ;; default

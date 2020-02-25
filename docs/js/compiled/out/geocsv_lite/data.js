@@ -12,21 +12,21 @@ goog.require('geocsv_lite.notify');
  * Returns the query part of the current document URL as a keyword-string map.
  */
 geocsv_lite.data.get_query_part_as_map = (function geocsv_lite$data$get_query_part_as_map(){
-var query_nvs = cljs.core.map.call(null,(function (p1__25200_SHARP_){
-return clojure.string.split.call(null,p1__25200_SHARP_,"=");
+var query_nvs = cljs.core.map.call(null,(function (p1__27850_SHARP_){
+return clojure.string.split.call(null,p1__27850_SHARP_,"=");
 }),clojure.string.split.call(null,cljs.core.subs.call(null,window.location.search,(1)),"&"));
 if(cljs.core.every_QMARK_.call(null,((function (query_nvs){
-return (function (p1__25201_SHARP_){
-return cljs.core._EQ_.call(null,cljs.core.count.call(null,p1__25201_SHARP_),(2));
+return (function (p1__27851_SHARP_){
+return cljs.core._EQ_.call(null,cljs.core.count.call(null,p1__27851_SHARP_),(2));
 });})(query_nvs))
 ,query_nvs)){
 return cljs.core.zipmap.call(null,cljs.core.map.call(null,((function (query_nvs){
-return (function (p1__25202_SHARP_){
-return cljs.core.keyword.call(null,cljs.core.first.call(null,p1__25202_SHARP_));
+return (function (p1__27852_SHARP_){
+return cljs.core.keyword.call(null,cljs.core.first.call(null,p1__27852_SHARP_));
 });})(query_nvs))
 ,query_nvs),cljs.core.map.call(null,((function (query_nvs){
-return (function (p1__25203_SHARP_){
-return cljs.core.nth.call(null,p1__25203_SHARP_,(1));
+return (function (p1__27853_SHARP_){
+return cljs.core.nth.call(null,p1__27853_SHARP_,(1));
 });})(query_nvs))
 ,query_nvs));
 } else {
@@ -63,8 +63,8 @@ return null;
  *   the first vector and values taken from one of the subsequent vectors.
  */
 geocsv_lite.data.prepare_records = (function geocsv_lite$data$prepare_records(data){
-var cols = cljs.core.map.call(null,(function (p1__25204_SHARP_){
-var n = ((cljs.core.empty_QMARK_.call(null,p1__25204_SHARP_))?null:((typeof p1__25204_SHARP_ === 'string')?clojure.string.lower_case.call(null,clojure.string.replace.call(null,clojure.string.trim.call(null,p1__25204_SHARP_),/[^\w\d]+/,"-")):null));
+var cols = cljs.core.map.call(null,(function (p1__27854_SHARP_){
+var n = ((cljs.core.empty_QMARK_.call(null,p1__27854_SHARP_))?null:((typeof p1__27854_SHARP_ === 'string')?clojure.string.lower_case.call(null,clojure.string.replace.call(null,clojure.string.trim.call(null,p1__27854_SHARP_),/[^\w\d]+/,"-")):null));
 return cljs.core.keyword.call(null,((cljs.core.empty_QMARK_.call(null,n))?cljs.core.gensym.call(null):n));
 }),cljs.core.first.call(null,data));
 return cljs.core.map.call(null,((function (cols){
@@ -92,102 +92,102 @@ return geocsv_lite.notify.error.call(null,["Bad response from server: ",cljs.cor
  * Get data for the view identified by this keyword `k` from this `uri`.
  */
 geocsv_lite.data.get_data_from_uri = (function geocsv_lite$data$get_data_from_uri(k,uri){
-var c__22951__auto__ = cljs.core.async.chan.call(null,(1));
-cljs.core.async.impl.dispatch.run.call(null,((function (c__22951__auto__){
+var c__27772__auto__ = cljs.core.async.chan.call(null,(1));
+cljs.core.async.impl.dispatch.run.call(null,((function (c__27772__auto__){
 return (function (){
-var f__22952__auto__ = (function (){var switch__22856__auto__ = ((function (c__22951__auto__){
-return (function (state_25213){
-var state_val_25214 = (state_25213[(1)]);
-if((state_val_25214 === (1))){
-var inst_25205 = [new cljs.core.Keyword(null,"with-credentials?","with-credentials?",-1773202222)];
-var inst_25206 = ["false"];
-var inst_25207 = cljs.core.PersistentHashMap.fromArrays(inst_25205,inst_25206);
-var inst_25208 = cljs_http.client.get.call(null,uri,inst_25207);
-var state_25213__$1 = state_25213;
-return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null,state_25213__$1,(2),inst_25208);
+var f__27773__auto__ = (function (){var switch__27749__auto__ = ((function (c__27772__auto__){
+return (function (state_27863){
+var state_val_27864 = (state_27863[(1)]);
+if((state_val_27864 === (1))){
+var inst_27855 = [new cljs.core.Keyword(null,"with-credentials?","with-credentials?",-1773202222)];
+var inst_27856 = ["false"];
+var inst_27857 = cljs.core.PersistentHashMap.fromArrays(inst_27855,inst_27856);
+var inst_27858 = cljs_http.client.get.call(null,uri,inst_27857);
+var state_27863__$1 = state_27863;
+return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null,state_27863__$1,(2),inst_27858);
 } else {
-if((state_val_25214 === (2))){
-var inst_25210 = (state_25213[(2)]);
-var inst_25211 = geocsv_lite.data.default_handler.call(null,inst_25210,k);
-var state_25213__$1 = state_25213;
-return cljs.core.async.impl.ioc_helpers.return_chan.call(null,state_25213__$1,inst_25211);
+if((state_val_27864 === (2))){
+var inst_27860 = (state_27863[(2)]);
+var inst_27861 = geocsv_lite.data.default_handler.call(null,inst_27860,k);
+var state_27863__$1 = state_27863;
+return cljs.core.async.impl.ioc_helpers.return_chan.call(null,state_27863__$1,inst_27861);
 } else {
 return null;
 }
 }
-});})(c__22951__auto__))
+});})(c__27772__auto__))
 ;
-return ((function (switch__22856__auto__,c__22951__auto__){
+return ((function (switch__27749__auto__,c__27772__auto__){
 return (function() {
-var geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto__ = null;
-var geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto____0 = (function (){
-var statearr_25215 = [null,null,null,null,null,null,null];
-(statearr_25215[(0)] = geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto__);
+var geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto__ = null;
+var geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto____0 = (function (){
+var statearr_27865 = [null,null,null,null,null,null,null];
+(statearr_27865[(0)] = geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto__);
 
-(statearr_25215[(1)] = (1));
+(statearr_27865[(1)] = (1));
 
-return statearr_25215;
+return statearr_27865;
 });
-var geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto____1 = (function (state_25213){
+var geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto____1 = (function (state_27863){
 while(true){
-var ret_value__22858__auto__ = (function (){try{while(true){
-var result__22859__auto__ = switch__22856__auto__.call(null,state_25213);
-if(cljs.core.keyword_identical_QMARK_.call(null,result__22859__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
+var ret_value__27751__auto__ = (function (){try{while(true){
+var result__27752__auto__ = switch__27749__auto__.call(null,state_27863);
+if(cljs.core.keyword_identical_QMARK_.call(null,result__27752__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
 continue;
 } else {
-return result__22859__auto__;
+return result__27752__auto__;
 }
 break;
 }
-}catch (e25216){if((e25216 instanceof Object)){
-var ex__22860__auto__ = e25216;
-var statearr_25217_25219 = state_25213;
-(statearr_25217_25219[(5)] = ex__22860__auto__);
+}catch (e27866){if((e27866 instanceof Object)){
+var ex__27753__auto__ = e27866;
+var statearr_27867_27869 = state_27863;
+(statearr_27867_27869[(5)] = ex__27753__auto__);
 
 
-cljs.core.async.impl.ioc_helpers.process_exception.call(null,state_25213);
+cljs.core.async.impl.ioc_helpers.process_exception.call(null,state_27863);
 
 return new cljs.core.Keyword(null,"recur","recur",-437573268);
 } else {
-throw e25216;
+throw e27866;
 
 }
 }})();
-if(cljs.core.keyword_identical_QMARK_.call(null,ret_value__22858__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
-var G__25220 = state_25213;
-state_25213 = G__25220;
+if(cljs.core.keyword_identical_QMARK_.call(null,ret_value__27751__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
+var G__27870 = state_27863;
+state_27863 = G__27870;
 continue;
 } else {
-return ret_value__22858__auto__;
+return ret_value__27751__auto__;
 }
 break;
 }
 });
-geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto__ = function(state_25213){
+geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto__ = function(state_27863){
 switch(arguments.length){
 case 0:
-return geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto____0.call(this);
+return geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto____0.call(this);
 case 1:
-return geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto____1.call(this,state_25213);
+return geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto____1.call(this,state_27863);
 }
 throw(new Error('Invalid arity: ' + arguments.length));
 };
-geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto__.cljs$core$IFn$_invoke$arity$0 = geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto____0;
-geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto__.cljs$core$IFn$_invoke$arity$1 = geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto____1;
-return geocsv_lite$data$get_data_from_uri_$_state_machine__22857__auto__;
+geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto__.cljs$core$IFn$_invoke$arity$0 = geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto____0;
+geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto__.cljs$core$IFn$_invoke$arity$1 = geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto____1;
+return geocsv_lite$data$get_data_from_uri_$_state_machine__27750__auto__;
 })()
-;})(switch__22856__auto__,c__22951__auto__))
+;})(switch__27749__auto__,c__27772__auto__))
 })();
-var state__22953__auto__ = (function (){var statearr_25218 = f__22952__auto__.call(null);
-(statearr_25218[(6)] = c__22951__auto__);
+var state__27774__auto__ = (function (){var statearr_27868 = f__27773__auto__.call(null);
+(statearr_27868[(6)] = c__27772__auto__);
 
-return statearr_25218;
+return statearr_27868;
 })();
-return cljs.core.async.impl.ioc_helpers.run_state_machine_wrapped.call(null,state__22953__auto__);
-});})(c__22951__auto__))
+return cljs.core.async.impl.ioc_helpers.run_state_machine_wrapped.call(null,state__27774__auto__);
+});})(c__27772__auto__))
 );
 
-return c__22951__auto__;
+return c__27772__auto__;
 });
 /**
  * Get data for the view identified by this keyword `k` from this `data-source`.
@@ -198,7 +198,7 @@ console.debug(["get-data: k = `",cljs.core.str.cljs$core$IFn$_invoke$arity$1(k),
 
 var p = cljs.core.js__GT_clj.call(null,Papa.parse(data_source),new cljs.core.Keyword(null,"keywordize-keys","keywordize-keys",1310784252),true);
 var data = ((cljs.core.empty_QMARK_.call(null,new cljs.core.Keyword(null,"errors","errors",-908790718).cljs$core$IFn$_invoke$arity$1(p)))?new cljs.core.Keyword(null,"data","data",-232669377).cljs$core$IFn$_invoke$arity$1(p):(function (){try{return cljs.core.js__GT_clj.call(null,JSON.parse(data_source));
-}catch (e25221){var _ = e25221;
+}catch (e27871){var _ = e27871;
 return null;
 }})());
 console.debug("Found records: ",cljs.core.clj__GT_js.call(null,data));
@@ -213,101 +213,101 @@ return geocsv_lite.data.get_data_from_uri.call(null,k,data_source);
 }
 });
 geocsv_lite.data.get_data_with_uri_and_handler = (function geocsv_lite$data$get_data_with_uri_and_handler(uri,handler_fn,k){
-var c__22951__auto__ = cljs.core.async.chan.call(null,(1));
-cljs.core.async.impl.dispatch.run.call(null,((function (c__22951__auto__){
+var c__27772__auto__ = cljs.core.async.chan.call(null,(1));
+cljs.core.async.impl.dispatch.run.call(null,((function (c__27772__auto__){
 return (function (){
-var f__22952__auto__ = (function (){var switch__22856__auto__ = ((function (c__22951__auto__){
-return (function (state_25229){
-var state_val_25230 = (state_25229[(1)]);
-if((state_val_25230 === (1))){
-var inst_25222 = cljs_http.client.get.call(null,uri);
-var state_25229__$1 = state_25229;
-return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null,state_25229__$1,(2),inst_25222);
+var f__27773__auto__ = (function (){var switch__27749__auto__ = ((function (c__27772__auto__){
+return (function (state_27879){
+var state_val_27880 = (state_27879[(1)]);
+if((state_val_27880 === (1))){
+var inst_27872 = cljs_http.client.get.call(null,uri);
+var state_27879__$1 = state_27879;
+return cljs.core.async.impl.ioc_helpers.take_BANG_.call(null,state_27879__$1,(2),inst_27872);
 } else {
-if((state_val_25230 === (2))){
-var inst_25224 = (state_25229[(2)]);
-var inst_25225 = (new cljs.core.List(null,k,null,(1),null));
-var inst_25226 = (new cljs.core.List(null,inst_25224,inst_25225,(2),null));
-var inst_25227 = cljs.core.apply.call(null,handler_fn,inst_25226);
-var state_25229__$1 = state_25229;
-return cljs.core.async.impl.ioc_helpers.return_chan.call(null,state_25229__$1,inst_25227);
+if((state_val_27880 === (2))){
+var inst_27874 = (state_27879[(2)]);
+var inst_27875 = (new cljs.core.List(null,k,null,(1),null));
+var inst_27876 = (new cljs.core.List(null,inst_27874,inst_27875,(2),null));
+var inst_27877 = cljs.core.apply.call(null,handler_fn,inst_27876);
+var state_27879__$1 = state_27879;
+return cljs.core.async.impl.ioc_helpers.return_chan.call(null,state_27879__$1,inst_27877);
 } else {
 return null;
 }
 }
-});})(c__22951__auto__))
+});})(c__27772__auto__))
 ;
-return ((function (switch__22856__auto__,c__22951__auto__){
+return ((function (switch__27749__auto__,c__27772__auto__){
 return (function() {
-var geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto__ = null;
-var geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto____0 = (function (){
-var statearr_25231 = [null,null,null,null,null,null,null];
-(statearr_25231[(0)] = geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto__);
+var geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto__ = null;
+var geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto____0 = (function (){
+var statearr_27881 = [null,null,null,null,null,null,null];
+(statearr_27881[(0)] = geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto__);
 
-(statearr_25231[(1)] = (1));
+(statearr_27881[(1)] = (1));
 
-return statearr_25231;
+return statearr_27881;
 });
-var geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto____1 = (function (state_25229){
+var geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto____1 = (function (state_27879){
 while(true){
-var ret_value__22858__auto__ = (function (){try{while(true){
-var result__22859__auto__ = switch__22856__auto__.call(null,state_25229);
-if(cljs.core.keyword_identical_QMARK_.call(null,result__22859__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
+var ret_value__27751__auto__ = (function (){try{while(true){
+var result__27752__auto__ = switch__27749__auto__.call(null,state_27879);
+if(cljs.core.keyword_identical_QMARK_.call(null,result__27752__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
 continue;
 } else {
-return result__22859__auto__;
+return result__27752__auto__;
 }
 break;
 }
-}catch (e25232){if((e25232 instanceof Object)){
-var ex__22860__auto__ = e25232;
-var statearr_25233_25235 = state_25229;
-(statearr_25233_25235[(5)] = ex__22860__auto__);
+}catch (e27882){if((e27882 instanceof Object)){
+var ex__27753__auto__ = e27882;
+var statearr_27883_27885 = state_27879;
+(statearr_27883_27885[(5)] = ex__27753__auto__);
 
 
-cljs.core.async.impl.ioc_helpers.process_exception.call(null,state_25229);
+cljs.core.async.impl.ioc_helpers.process_exception.call(null,state_27879);
 
 return new cljs.core.Keyword(null,"recur","recur",-437573268);
 } else {
-throw e25232;
+throw e27882;
 
 }
 }})();
-if(cljs.core.keyword_identical_QMARK_.call(null,ret_value__22858__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
-var G__25236 = state_25229;
-state_25229 = G__25236;
+if(cljs.core.keyword_identical_QMARK_.call(null,ret_value__27751__auto__,new cljs.core.Keyword(null,"recur","recur",-437573268))){
+var G__27886 = state_27879;
+state_27879 = G__27886;
 continue;
 } else {
-return ret_value__22858__auto__;
+return ret_value__27751__auto__;
 }
 break;
 }
 });
-geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto__ = function(state_25229){
+geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto__ = function(state_27879){
 switch(arguments.length){
 case 0:
-return geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto____0.call(this);
+return geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto____0.call(this);
 case 1:
-return geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto____1.call(this,state_25229);
+return geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto____1.call(this,state_27879);
 }
 throw(new Error('Invalid arity: ' + arguments.length));
 };
-geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto__.cljs$core$IFn$_invoke$arity$0 = geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto____0;
-geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto__.cljs$core$IFn$_invoke$arity$1 = geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto____1;
-return geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__22857__auto__;
+geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto__.cljs$core$IFn$_invoke$arity$0 = geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto____0;
+geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto__.cljs$core$IFn$_invoke$arity$1 = geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto____1;
+return geocsv_lite$data$get_data_with_uri_and_handler_$_state_machine__27750__auto__;
 })()
-;})(switch__22856__auto__,c__22951__auto__))
+;})(switch__27749__auto__,c__27772__auto__))
 })();
-var state__22953__auto__ = (function (){var statearr_25234 = f__22952__auto__.call(null);
-(statearr_25234[(6)] = c__22951__auto__);
+var state__27774__auto__ = (function (){var statearr_27884 = f__27773__auto__.call(null);
+(statearr_27884[(6)] = c__27772__auto__);
 
-return statearr_25234;
+return statearr_27884;
 })();
-return cljs.core.async.impl.ioc_helpers.run_state_machine_wrapped.call(null,state__22953__auto__);
-});})(c__22951__auto__))
+return cljs.core.async.impl.ioc_helpers.run_state_machine_wrapped.call(null,state__27774__auto__);
+});})(c__27772__auto__))
 );
 
-return c__22951__auto__;
+return c__27772__auto__;
 });
 
-//# sourceMappingURL=data.js.map?rel=1582560148588
+//# sourceMappingURL=data.js.map?rel=1582633804610

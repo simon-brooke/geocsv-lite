@@ -31,13 +31,13 @@ geocsv_lite.notify.message.call(null,"Geolocation not available");
 
 return (0);
 }
-}catch (e25189){if((e25189 instanceof Object)){
-var any = e25189;
+}catch (e26497){if((e26497 instanceof Object)){
+var any = e26497;
 geocsv_lite.notify.error.call(null,["Exception while trying to access location: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(any)].join(''));
 
 return (0);
 } else {
-throw e25189;
+throw e26497;
 
 }
 }});
@@ -56,10 +56,10 @@ return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(((cljs.core.empty_QMARK_.cal
  */
 geocsv_lite.gis.popup_content = (function geocsv_lite$gis$popup_content(record){
 if(cljs.core.map_QMARK_.call(null,record)){
-return ["<h5>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"name","name",1843675177).cljs$core$IFn$_invoke$arity$1(record)),"</h5><dl>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.call(null,cljs.core.str,cljs.core.map.call(null,(function (p1__25190_SHARP_){
-return ["<dt>",cljs.core.name.call(null,p1__25190_SHARP_),"</dt><dd>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(record.call(null,p1__25190_SHARP_)),"</dd>"].join('');
-}),cljs.core.filter.call(null,(function (p1__25191_SHARP_){
-return record.call(null,p1__25191_SHARP_);
+return ["<h5>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"name","name",1843675177).cljs$core$IFn$_invoke$arity$1(record)),"</h5><dl>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.call(null,cljs.core.str,cljs.core.map.call(null,(function (p1__26498_SHARP_){
+return ["<dt>",cljs.core.name.call(null,p1__26498_SHARP_),"</dt><dd>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(record.call(null,p1__26498_SHARP_)),"</dd>"].join('');
+}),cljs.core.filter.call(null,(function (p1__26499_SHARP_){
+return record.call(null,p1__26499_SHARP_);
 }),cljs.core.keys.call(null,record))))),"</dl>"].join('');
 } else {
 return null;
@@ -72,10 +72,10 @@ return null;
  */
 geocsv_lite.gis.popup_table_content = (function geocsv_lite$gis$popup_table_content(record){
 if(cljs.core.map_QMARK_.call(null,record)){
-return ["<h5>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"name","name",1843675177).cljs$core$IFn$_invoke$arity$1(record)),"</h5><table>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.call(null,cljs.core.str,cljs.core.map.call(null,(function (p1__25192_SHARP_){
-return ["<tr><th>",cljs.core.name.call(null,p1__25192_SHARP_),"</th><td>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(record.call(null,p1__25192_SHARP_)),"</td></tr>"].join('');
-}),cljs.core.sort.call(null,cljs.core.filter.call(null,(function (p1__25193_SHARP_){
-return record.call(null,p1__25193_SHARP_);
+return ["<h5>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"name","name",1843675177).cljs$core$IFn$_invoke$arity$1(record)),"</h5><table>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.call(null,cljs.core.str,cljs.core.map.call(null,(function (p1__26500_SHARP_){
+return ["<tr><th>",cljs.core.name.call(null,p1__26500_SHARP_),"</th><td>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(record.call(null,p1__26500_SHARP_)),"</td></tr>"].join('');
+}),cljs.core.sort.call(null,cljs.core.filter.call(null,(function (p1__26501_SHARP_){
+return record.call(null,p1__26501_SHARP_);
 }),cljs.core.keys.call(null,record)))))),"</table>"].join('');
 } else {
 return null;
@@ -108,9 +108,9 @@ return null;
  */
 geocsv_lite.gis.map_remove_pins = (function geocsv_lite$gis$map_remove_pins(view){
 if(cljs.core.truth_(view)){
-return view.eachLayer((function (p1__25194_SHARP_){
-if((p1__25194_SHARP_ instanceof L.Marker)){
-return view.removeLayer(p1__25194_SHARP_);
+return view.eachLayer((function (p1__26502_SHARP_){
+if((p1__26502_SHARP_ instanceof L.Marker)){
+return view.removeLayer(p1__26502_SHARP_);
 } else {
 return null;
 }
@@ -129,9 +129,9 @@ var y__4223__auto__ = ((180) / (max_lat - min_lat));
 return ((x__4222__auto__ < y__4223__auto__) ? x__4222__auto__ : y__4223__auto__);
 })();
 return cljs.core.first.call(null,cljs.core.remove.call(null,cljs.core.nil_QMARK_,cljs.core.map.call(null,((function (n){
-return (function (p1__25195_SHARP_){
-if((cljs.core.reduce.call(null,cljs.core._STAR_,cljs.core.repeat.call(null,(2),p1__25195_SHARP_)) > n)){
-return p1__25195_SHARP_;
+return (function (p1__26503_SHARP_){
+if((cljs.core.reduce.call(null,cljs.core._STAR_,cljs.core.repeat.call(null,(2),p1__26503_SHARP_)) > n)){
+return p1__26503_SHARP_;
 } else {
 return null;
 }
@@ -144,7 +144,7 @@ return null;
  *   `:latitude` and `:longitude` keys.
  */
 geocsv_lite.gis.compute_centre = (function geocsv_lite$gis$compute_centre(records){
-var lats = cljs.core.remove.call(null,cljs.core.zero_QMARK_,cljs.core.filter.call(null,cljs.core.number_QMARK_,cljs.core.map.call(null,Number,cljs.core.map.call(null,new cljs.core.Keyword(null,"latitude","latitude",394867543),records))));
+try{var lats = cljs.core.remove.call(null,cljs.core.zero_QMARK_,cljs.core.filter.call(null,cljs.core.number_QMARK_,cljs.core.map.call(null,Number,cljs.core.map.call(null,new cljs.core.Keyword(null,"latitude","latitude",394867543),records))));
 var min_lat = cljs.core.apply.call(null,cljs.core.min,lats);
 var max_lat = cljs.core.apply.call(null,cljs.core.max,lats);
 var lngs = cljs.core.remove.call(null,cljs.core.zero_QMARK_,cljs.core.filter.call(null,cljs.core.number_QMARK_,cljs.core.map.call(null,Number,cljs.core.map.call(null,new cljs.core.Keyword(null,"longitude","longitude",-1268876372),records))));
@@ -155,7 +155,11 @@ return new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"la
 } else {
 return cljs.core.PersistentArrayMap.EMPTY;
 }
-});
+}catch (e26504){var error = e26504;
+geocsv_lite.notify.error.call(null,["Failed to compute centre because ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(error)].join(''));
+
+return cljs.core.PersistentArrayMap.EMPTY;
+}});
 /**
  * Refresh the map pins on the current map. Side-effecty; liable to be
  *   problematic.
@@ -165,8 +169,8 @@ var view__$1 = geocsv_lite.gis.map_remove_pins.call(null,view);
 var centre = geocsv_lite.gis.compute_centre.call(null,records);
 if(cljs.core.truth_(view__$1)){
 geocsv_lite.notify.message.call(null,["Mapped ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.count.call(null,cljs.core.remove.call(null,cljs.core.nil_QMARK_,cljs.core.map.call(null,((function (view__$1,centre){
-return (function (p1__25196_SHARP_,p2__25197_SHARP_){
-return geocsv_lite.gis.add_map_pin.call(null,p1__25196_SHARP_,p2__25197_SHARP_,view__$1);
+return (function (p1__26505_SHARP_,p2__26506_SHARP_){
+return geocsv_lite.gis.add_map_pin.call(null,p1__26505_SHARP_,p2__26506_SHARP_,view__$1);
 });})(view__$1,centre))
 ,records,cljs.core.range.call(null)))))," records, centre at ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(centre)].join(''));
 
@@ -180,4 +184,4 @@ return geocsv_lite.notify.error.call(null,"View is not yet ready");
 }
 });
 
-//# sourceMappingURL=gis.js.map?rel=1582560148563
+//# sourceMappingURL=gis.js.map?rel=1582633804282
