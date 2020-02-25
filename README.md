@@ -2,6 +2,10 @@
 
 An ultra-lightweight tool to show comma-separated value data on a map.
 
+## Demo
+
+There's a [working demo site](https://simon-brooke.github.io/geocsv-lite/), from which you can crib how to integrate this into your own website.
+
 ## Overview
 
 This is an attempt to do a lightweight client-side only version of [geocsv](https://github.com/simon-brooke/geocsv), q.v. It doesn't fully work because it cannot pull data from remote sites because of cross-site scripting rules, and I haven't found a workaround for that.
