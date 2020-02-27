@@ -1,0 +1,1 @@
+{:infer-externs true, :output-dir "target/cljsbuild-compiler-1", :externs ["L" "Papa" "closure-js/externs"], :optimizations :none, :warnings true, :output-to "resources/public/js/compiled/geocsv_lite.js", :output-wrapper false, :libs ["closure-js/libs"], :main geocsv-lite.core, :pretty-print true}

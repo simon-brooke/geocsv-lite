@@ -50,10 +50,10 @@
                 :source-paths ["src"]
                 :compiler {:output-to "resources/public/js/compiled/geocsv_lite.js"
                            :main geocsv-lite.core
-                           :optimizations :advanced
+                           :optimizations :none
                            :externs ["L" "Papa"]
                            :infer-externs true
-                           :pretty-print false
+                           :pretty-print true
                            :warnings true}}]}
 
   :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
