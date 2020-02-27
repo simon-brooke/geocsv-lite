@@ -17,7 +17,7 @@
 
   :npm {:dependencies [[papaparse "5.1.0"]
                        [leaflet "1.6.0"]]
-        :root "resources/public/vendor"}
+        :root "vendor"}
 
   :source-paths ["src"]
 
@@ -37,8 +37,8 @@
 
                 :compiler {:main geocsv-lite.core
                            :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/geocsv_lite.js"
-                           :output-dir "resources/public/js/compiled/out"
+                           :output-to "js/compiled/geocsv_lite.js"
+                           :output-dir "js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                            ;; https://github.com/binaryage/cljs-devtools
@@ -48,19 +48,19 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/geocsv_lite.js"
+                :compiler {:output-to "js/compiled/geocsv_lite.js"
                            :main geocsv-lite.core
-                           :optimizations :none
+                           :optimizations :advanced
                            :externs ["L" "Papa"]
                            :infer-externs true
                            :pretty-print true
                            :warnings true}}]}
 
-  :figwheel {;; :http-server-root "public" ;; default and assumes "resources"
+  :figwheel {:http-server-root "../"
              ;; :server-port 3449 ;; default
              ;; :server-ip "127.0.0.1"
 
-             :css-dirs ["resources/public/css"] ;; watch and update CSS
+             :css-dirs ["css"] ;; watch and update CSS
 
              ;; Start an nREPL server into the running figwheel process
              ;; :nrepl-port 7888
