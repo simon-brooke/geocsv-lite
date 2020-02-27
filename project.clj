@@ -1,4 +1,4 @@
-(defproject geocsv-lite "0.1.0"
+(defproject geocsv-lite "1.0.1"
   :description "An ultra-lightweight tool to show comma-separated value data on a map."
   :url "http://example.com/FIXME"
   :license {:name "GPL-2.0-or-later WITH Classpath-exception-2.0"
