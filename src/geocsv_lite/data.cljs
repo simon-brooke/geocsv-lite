@@ -104,13 +104,14 @@
     ;; string is not one. So we will assume that what we've been passed is a
     ;; URL unless we've been able to parse valid data out of it.
     (js/console.debug "Found records: " (clj->js data))
-    (if
-      ;; it looks like valid data if it's a vector of vectors.
+    (cond
+      ;; CSV will appear as a vector of vectors.
       (and (vector? data) (every? vector? data))
       (let [records (prepare-records data)]
         (n/message (str "Found " (count records) " records of inline data for map `" k "`"))
         (gis/refresh-map-pins (get-view k) (prepare-records data)))
-      ; else
+      ;; TODO: clauses to handle GeoJSON, KML here.
+      :else
       (get-data-from-uri k data-source))))
 
 
@@ -133,6 +134,9 @@
 ;;                   :keywordize-keys true)))
 
 ;; (get-data :inline-csv-map "http://localhost:3449/data/data.csv")
+
+;; (get-data :foo "file:///home/simon/workspace/geocsv-lite/resources/public/data/wild-lands/doc.kml")
+
 ;; (get-data :inline-csv-map data-source)
 ;; (every? (fn [r] (and (vector? r) (every? vector? r))) (:data (js->clj (.parse js/Papa data-source)
 ;;                   :keywordize-keys true)))
