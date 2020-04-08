@@ -35,6 +35,11 @@ Note that, unlike in **geocsv**, *THERE IS NO DEFAULT PIN*, as there is no serve
 1. There is no `category` column, or
 2. If the `category` column is empty
 
+## Other formats
+
+`geocsv-lite` now experimentally displays GPX and KML formated XML, by using [leaflet-omnivore](https://github.com/mapbox/leaflet-omnivore). While `leaflet-omnivore` also parses CSV, it doesn't
+handle the CSV as richly as GeoCSV does natively, so we don't use Omnivore to parse CSV.
+
 ## Setup
 
 To get an interactive development environment run:

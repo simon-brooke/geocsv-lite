@@ -16,7 +16,8 @@
             [lein-npm "0.6.2"]]
 
   :npm {:dependencies [[papaparse "5.1.0"]
-                       [leaflet "1.6.0"]]
+                       [leaflet "1.6.0"]
+                       [leaflet-omnivore "0.3.4"]]
         :root "resources/public/vendor"}
 
   :source-paths ["src"]
@@ -56,7 +57,7 @@
                            :pretty-print true
                            :warnings true}}]}
 
-  :figwheel {:http-server-root "../"
+  :figwheel {;; :http-server-root "../"
              ;; :server-port 3449 ;; default
              ;; :server-ip "127.0.0.1"
 

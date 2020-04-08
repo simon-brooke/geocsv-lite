@@ -101,6 +101,15 @@ crossorigin=""/ -->
       </p>
       <div id="url-map"
            style="height: 600px; width: 80%; border: thin solid gray;"></div>
+      <h2>
+        Map using KML from URL
+      </h2>
+      <p>
+        This is more limited than I would like, because of cross-site scripting
+        blocks; the URL <b>must</b> be sourced from the same host as the page.
+      </p>
+      <div id="kml-map"
+           style="height: 600px; width: 80%; border: thin solid gray;"></div>
       <div id="doc">
         <p>
           Use this page as a crib for how to use <b>GeoCSV Lite</b> in your projects. In order
@@ -193,6 +202,7 @@ integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUT
 crossorigin=""></script -->
   <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script -->
   <script src="vendor/node_modules/leaflet/dist/leaflet.js"></script>
+  <script src="vendor/node_modules/leaflet-omnivore/leaflet-omnivore.min.js"></script>
   <script src="vendor/node_modules/papaparse/papaparse.min.js"></script>
   <script src="js/compiled/geocsv_lite.js" type="text/javascript"></script>
   <script>
@@ -267,9 +277,12 @@ crossorigin=""></script -->
         url = url.substring(0, window.location.href.length - "index.html".length);
     }
 
-    url =  url + "data/europe-capitals.csv";
+    var csv_url =  url + "data/europe-capitals.csv";
 
-    geocsv_lite.core.initialise_map_element("url-map", url);
+    geocsv_lite.core.initialise_map_element("url-map", csv_url);
+
+    /* Map using KML from URL */
+    geocsv_lite.core.initialise_map_element("kml-map", url + "data/wild-lands/doc.kml");
   </script>
   </body>
 </html>

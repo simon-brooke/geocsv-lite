@@ -9,7 +9,6 @@
             [geocsv-lite.notify :as n]))
 
 
-
 (defn get-query-part-as-map
   "Returns the query part of the current document URL as a keyword-string map."
   ;; not actually used in the current incarnation
@@ -87,11 +86,93 @@
         (default-handler response k))))
 
 
-(defn get-data
-  "Get data for the view identified by this keyword `k` from this `data-source`.
-  The data source may be a URL, or a CSV or JSON formatted string."
+(defn identify-url-format
+  "Assuming `data` is a url, infer its probable data type from the file
+  extension if any; if no obvious file extension, return null"
+  [data]
+  (let [extn (re-find #"\.[A-Za-z0-9]{3,4}$" data)]
+    (if extn {:type :url
+              :format (keyword (subs (cs/lower-case extn) 1))})))
+
+;; (identify-url-format "data/europe-capitals.csv")
+;; (identify-url-format "data/wild-lands/doc.kml")
+
+(defn kml?
+  "Return non-nil if this `data` appears to be XML text with a namespace
+  appropriate to KML 2.2."
+  [data]
+  (re-find #" +xmlns=[\"\']http://www.opengis.net/kml/2.2[\"\']" data))
+
+;; (kml? "<?xml version=\"1.0\" ?><kml xmlns=\"http://www.opengis.net/kml/2.2\">
+;; <Document><Folder><name>WILDLAND_SCOTLAND</name>")
+
+(defn gpx?
+  "Return non-nil if this `data` appears to be XML text with a namespace
+  appropriate to GPX 1.1."
+  [data]
+  (re-find #" +xmlns=[\"\']http://www.topografix.com/GPX/1/1[\"\']" data))
+
+;; (gpx? "<gpx xmlns=\"http://www.topografix.com/GPX/1/1\"
+;;       xmlns:gpxx=\"http://www.garmin.com/xmlschemas/GpxExtensions/v3\"
+;;       xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v1\"
+;;       creator=\"Oregon 400t\" version=\"1.1\"
+;;       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+;;       xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd\">
+;;   <metadata>
+;;     <link href=\"http://www.garmin.com\">
+;;       <text>Garmin International</text>
+;;     </link>
+;;     <time>2009-10-17T22:58:43Z</time>
+;;   </metadata>
+;;   <trk>
+;;     <name>Example GPX Document</name>
+;;     <trkseg>
+;;       <trkpt lat=\"47.644548\" lon=\"-122.326897\">
+;;         <ele>4.46</ele>
+;;         <time>2009-10-17T18:37:26Z</time>
+;;       </trkpt>
+;;       <trkpt lat=\"47.644548\" lon=\"-122.326897\">
+;;         <ele>4.94</ele>
+;;         <time>2009-10-17T18:37:31Z</time>
+;;       </trkpt>
+;;       <trkpt lat=\"47.644548\" lon=\"-122.326897\">
+;;         <ele>6.87</ele>
+;;         <time>2009-10-17T18:37:34Z</time>
+;;       </trkpt>
+;;     </trkseg>
+;;   </trk>
+;; </gpx>")
+
+(defn identify-data-format
+  "Assuming that `data` is inline data, not a URL, try to infer its format;
+  default to `:csv`."
+  [data]
+  {:type :inline
+   :format
+   (case (first (cs/triml data))
+     ("{" "[") :json
+     "<" (cond
+           (kml? data) :kml
+           (gpx? data) :gpx
+           :else
+           :xml)
+     :csv)})
+
+;; (identify-data-format "<?xml version=\"1.0\" ?><kml xmlns=\"http://www.opengis.net/kml/2.2\">
+;;  <Document><Folder><name>WILDLAND_SCOTLAND</name>")
+
+(defn identify-format
+  [data]
+  (or (identify-url-format data) (identify-data-format data)))
+
+(identify-format "<?xml version=\"1.0\" ?><kml xmlns=\"http://www.opengis.net/kml/2.2\">
+  <Document><Folder><name>WILDLAND_SCOTLAND</name>")
+(identify-format "data/europe-capitals.csv")
+
+(defn show-data-from-csv
+  "Show data from this `data-source`, assumed to be either a CSV URL or else inline
+  CSV text, on the map identified by `k`."
   [k data-source]
-  (js/console.debug (str "get-data: k = `" k "`; data-source = `" data-source "`"))
   (let [p (js->clj (.parse js/Papa data-source)  :keywordize-keys true)
         data (if
                (empty? (:errors p))
@@ -114,6 +195,36 @@
       :else
       (get-data-from-uri k data-source))))
 
+(defn show-data-with-omnivore
+  "Show data from this `data-source`, having the inferred format `f`, in the
+  map view identified by `k`."
+  [f k data-source]
+  (let [view (get-view k)]
+    (if-not
+      (case (:format f)
+        :gpx (case (:type f)
+               :url (.addTo (.gpx js/omnivore data-source) view))
+        :kml (case (:type f)
+               :url (.addTo (.kml js/omnivore data-source) view))
+        :json ;; assuming geojson here, which is dodgy.
+        (case (:type f)
+          :url (.addTo (.kml js/omnivore data-source) view)))
+      (n/error (str "Cannot yet handle " f)))))
+
+(defn get-data
+  "Get data for the view identified by this keyword `k` from this `data-source`.
+  The data source may be a URL, or a CSV or JSON formatted string."
+  [k data-source]
+  (let [f (identify-format data-source)]
+    (js/console.debug (str "get-data: k = `" k
+                           "`; data-source = `" data-source
+                           "`; handled as `" f "`"))
+    (case
+      (:format f)
+      :csv (show-data-from-csv k data-source)
+      (:kml :gpx :json) (show-data-with-omnivore f k data-source)
+      ;; default
+      (n/error (str "Not able to display " f)))))
 
 (defn get-data-with-uri-and-handler
   [uri handler-fn k]
