@@ -17,7 +17,7 @@
 
   :npm {:dependencies [[papaparse "5.1.0"]
                        [leaflet "1.6.0"]]
-        :root "vendor"}
+        :root "resources/public/vendor"}
 
   :source-paths ["src"]
 
@@ -36,9 +36,9 @@
                            :open-urls ["http://localhost:3449/index.html"]}
 
                 :compiler {:main geocsv-lite.core
-                           :asset-path "js/compiled/out"
-                           :output-to "js/compiled/geocsv_lite.js"
-                           :output-dir "js/compiled/out"
+                           :asset-path "resources/public/js/compiled/out"
+                           :output-to "resources/public/js/compiled/geocsv_lite.js"
+                           :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                            ;; https://github.com/binaryage/cljs-devtools
@@ -48,7 +48,7 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src"]
-                :compiler {:output-to "js/compiled/geocsv_lite.js"
+                :compiler {:output-to "resources/public/js/compiled/geocsv_lite.js"
                            :main geocsv-lite.core
                            :optimizations :advanced
                            :externs ["L" "Papa"]
