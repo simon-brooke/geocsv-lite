@@ -37,7 +37,7 @@
                            :open-urls ["http://localhost:3449/index.html"]}
 
                 :compiler {:main geocsv-lite.core
-                           :asset-path "resources/public/js/compiled/out"
+                           :asset-path "js/compiled/out"
                            :output-to "resources/public/js/compiled/geocsv_lite.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
