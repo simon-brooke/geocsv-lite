@@ -110,6 +110,16 @@ crossorigin=""/ -->
       </p>
       <div id="kml-map"
            style="height: 600px; width: 80%; border: thin solid gray;"></div>
+      <h2>
+        Map using inline KML
+      </h2>
+      <p>
+        This is more limited than I would like, because of cross-site scripting
+        blocks; the URL <b>must</b> be sourced from the same host as the page.
+      </p>
+      <div id="inline-kml-map"
+           style="height: 600px; width: 80%; border: thin solid gray;">
+      </div>
       <div id="doc">
         <p>
           Use this page as a crib for how to use <b>GeoCSV Lite</b> in your projects. In order
@@ -282,7 +292,7 @@ crossorigin=""></script -->
     geocsv_lite.core.initialise_map_element("url-map", csv_url);
 
     /* Map using KML from URL */
-    geocsv_lite.core.initialise_map_element("kml-map", url + "data/wild-lands/doc.kml");
+    geocsv_lite.core.initialise_map_element("kml-map", url + "data/wild-lands/doc-with-balloons.kml");
   </script>
   </body>
 </html>

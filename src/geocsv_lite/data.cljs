@@ -200,15 +200,22 @@
   map view identified by `k`."
   [f k data-source]
   (let [view (get-view k)]
-    (if-not
-      (case (:format f)
+    (if-let [layer (case (:format f)
         :gpx (case (:type f)
-               :url (.addTo (.gpx js/omnivore data-source) view))
+               :url (.gpx js/omnivore data-source)
+               :inline (.gpx.parse js/omnivore data-source))
         :kml (case (:type f)
-               :url (.addTo (.kml js/omnivore data-source) view))
+               :url (.kml js/omnivore data-source)
+               :inline (.kml.parse js/omnivore data-source))
         :json ;; assuming geojson here, which is dodgy.
         (case (:type f)
-          :url (.addTo (.kml js/omnivore data-source) view)))
+          :url (.addTo (.geojson js/omnivore data-source) view)))]
+      (do
+        (.addTo layer view)
+        ;; zoom and pan the view to the bounds of the layer.
+        ;; map.fitBounds(runLayer.getBounds());
+        (.fitBounds view (.getBounds layer))
+        (n/message (str "Added " (:format f) " layer")))
       (n/error (str "Cannot yet handle " f)))))
 
 (defn get-data
